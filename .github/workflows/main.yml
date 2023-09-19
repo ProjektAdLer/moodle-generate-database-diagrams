@@ -1,15 +1,15 @@
 name: Moodle Database Schema Generator
 
 on:
-  push:
-    tags:
-      - '*'
+  release:
+    types: [created]
+
 
 jobs:
   moodle-schema:
     strategy:
       matrix:
-        moodle-branch: ['MOODLE_400_STABLE', 'MOODLE_39_STABLE']
+        moodle-branch: ['MOODLE_39_STABLE', 'MOODLE_311_STABLE', 'MOODLE_400_STABLE', 'MOODLE_420_STABLE']
       fail-fast: false
     runs-on: ubuntu-latest
 
@@ -39,11 +39,11 @@ jobs:
           echo "CREATE DATABASE IF NOT EXISTS diagram;" | mysql -h 127.0.0.1 -P 3312 -u root -pa
           cat create_tables.sql | mysql -h 127.0.0.1 -P 3312 -u root -pa -D diagram
 
-      - name: Compress SQL file with xz
-        run: xz -e9 create_tables.sql
+      - name: Rename and compress SQL file with xz
+        run: mv create_tables.sql create_moodle_tables_${{ matrix.moodle-branch }}.sql && xz -e9 create_moodle_tables_${{ matrix.moodle-branch }}.sql
 
-      - name: Upload create_tables.sql.xz as artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: create_moodle_tables_${{ matrix.moodle-branch }}.sql.xz
-          path: create_tables.sql.xz
+      - name: Upload artifact to the release
+        run: |
+          gh release upload ${{ github.event.release.tag_name }} create_moodle_tables_${{ matrix.moodle-branch }}.sql.xz --clobber
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

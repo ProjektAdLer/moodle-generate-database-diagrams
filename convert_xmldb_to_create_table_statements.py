@@ -10,6 +10,12 @@ def apply_custom_fixes(sql_statements):
             "FOREIGN KEY (gradeitemid, courseid) REFERENCES grade_items(id, courseid)",
             "FOREIGN KEY (gradeitemid) REFERENCES grade_items(id)"
         )
+        # same but for earlier versions of moodle
+        fixed_statement = fixed_statement.replace(
+            "FOREIGN KEY (gradeitemid,courseid) REFERENCES grade_items(id,courseid)",
+            "FOREIGN KEY (gradeitemid) REFERENCES grade_items(id)"
+        )
+
         # Add more custom fixes here, if needed
         # fixed_statement = fixed_statement.replace("some_old_text", "some_new_text")
 
