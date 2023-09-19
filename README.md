@@ -9,7 +9,7 @@ It implements just enough to create database diagrams as this is the only target
 It is very likely that the created database will not work with moodle.
 
 ## compatible moodle versions
-It is known that moodle 3.9, 3.11, 4.0 and 4.2 are working.
+It is known that moodle 3.9, 3.11, 4.0, 4.1 and 4.2 are working.
 
 ## How to use
 The following assumes you are using WSL. It should work like that on linux as well.
