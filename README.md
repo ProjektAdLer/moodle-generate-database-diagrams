@@ -1,5 +1,5 @@
 # About this project
-The problem: When moodle designed their database system most popular database systems did not support foreign keys. 
+The problem: When moodle designed their database system most popular database systems did not support foreign keys (see [this Github issue](https://github.com/mdjnelson/moodle-mod_customcert/issues/331) or [this moodle forum discussion](https://moodle.org/mod/forum/discuss.php?d=74062)).
 Therefore, they decided to implement them software side in moodle.
 As of moodle 4.2 this is still the case.
 As a result it is not possible to automatically generate useful database diagrams for moodle databases as they require foreign keys to show relations between tables.
