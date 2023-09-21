@@ -56,3 +56,9 @@ find /path/to/moodle -name install.xml > list_of_xmldb_files.txt
 5. Now you can use any tool that can connect to a mariadb and create database diagrams from it (eg jetbrains IDEs or MySQL Workbench).
 
 Attention: Moodle has a lot of tables. You will have to create a selection of tables you want to show in the diagram.
+
+## usefull commands
+List all tables with foreign keys to a given table name:
+```sql
+SELECT TABLE_NAME, COLUMN_NAME, CONSTRAINT_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE REFERENCED_TABLE_NAME = '<table name>' AND REFERENCED_TABLE_SCHEMA = 'diagram'; 
+```

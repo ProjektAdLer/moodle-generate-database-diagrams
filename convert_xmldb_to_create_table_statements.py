@@ -25,7 +25,16 @@ def apply_custom_fixes(sql_statements):
 # Convert XMLDB type to SQL type
 def get_sql_type(xmldb_type, length, decimals=0):
     if xmldb_type == "int":
-        return f"INT({length})"
+        if int(length) <= 2:
+            return f"TINYINT({length})"
+        elif int(length) <= 4:
+            return f"SMALLINT({length})"
+        elif int(length) <= 6:
+            return f"MEDIUMINT({length})"
+        elif int(length) <= 9:
+            return f"INT({length})"
+        else:
+            return f"BIGINT({length})"
     elif xmldb_type == "text":
         return "TEXT"
     elif xmldb_type == "char":
@@ -33,7 +42,11 @@ def get_sql_type(xmldb_type, length, decimals=0):
     elif xmldb_type == "number":
         return f"FLOAT({length},{decimals})" if decimals else f"FLOAT({length})"
     elif xmldb_type == "float":
-        return "FLOAT"
+        if int(decimals) < 6:
+            return "FLOAT"
+        else:
+            return f"DOUBLE"
+
     else:
         sys.stderr.write(f"Error: Unknown type '{xmldb_type}' encountered.\n")
         sys.exit(1)
@@ -78,6 +91,7 @@ def convert_xmldb_to_sql(file_list):
                 field_name = field.get('NAME')
                 field_type = field.get('TYPE')
                 field_length = field.get('LENGTH', '')
+                field_comment = "COMMENT '" + field.get('COMMENT', '').replace("'", "''") + "'" if field.get('COMMENT') else ""
                 field_notnull = "NOT NULL" if field.get('NOTNULL') == "true" else ""
                 field_default = f"DEFAULT {quote_default(field.get('DEFAULT'))}" if field.get('DEFAULT') else ""
                 field_auto_increment = "AUTO_INCREMENT" if field.get('SEQUENCE') == "true" else ""
@@ -85,7 +99,7 @@ def convert_xmldb_to_sql(file_list):
                 field_decimals = field.get('DECIMALS', 0)
                 sql_type = get_sql_type(field_type, field_length, field_decimals)
 
-                field_line = f"{field_name} {sql_type} {field_notnull} {field_default} {field_auto_increment}".strip()
+                field_line = f"{field_name} {sql_type} {field_notnull} {field_default} {field_auto_increment} {field_comment}".strip()
                 fields.append(field_line)
 
             keys = []
