@@ -85,6 +85,7 @@ def convert_xmldb_to_sql(file_list):
         for table in root.find('TABLES').findall('TABLE'):
             table_name = table.get('NAME')
             comment = table.get('COMMENT', '')
+            table_comment = "COMMENT '" + comment.replace("'", "''") + "'" if comment else ""
 
             fields = []
             for field in table.find('FIELDS').findall('FIELD'):
@@ -123,7 +124,7 @@ def convert_xmldb_to_sql(file_list):
 
 
             fields_and_keys = ",\n".join(fields + keys)
-            create_table_statement = f"CREATE TABLE {table_name} (\n{fields_and_keys}\n);"
+            create_table_statement = f"CREATE TABLE {table_name} (\n{fields_and_keys}\n) {table_comment};"
 
             if comment:
                 create_table_statement = f"-- {comment}\n" + create_table_statement
