@@ -8,6 +8,11 @@ The solution: This repository contains a script that creates rudimentary SQL CRE
 It implements just enough to create database diagrams as this is the only target of this script.
 It is very likely that the created database will not work with moodle.
 
+|            ![example database diagram](diagram_example.png)            |
+|:----------------------------------------------------------------------:|
+| *Example database diagram with all columns except primary keys hidden* |
+
+
 ## compatible moodle versions
 It is known that moodle 3.9, 3.11, 4.0, 4.1 and 4.2 are working.
 
@@ -60,5 +65,5 @@ Attention: Moodle has a lot of tables. You will have to create a selection of ta
 ## usefull commands
 List all tables with foreign keys to a given table name:
 ```sql
-SELECT TABLE_NAME, COLUMN_NAME, CONSTRAINT_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE REFERENCED_TABLE_NAME = '<table name>' AND REFERENCED_TABLE_SCHEMA = 'diagram'; 
+SELECT TABLE_NAME, COLUMN_NAME, CONSTRAINT_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE REFERENCED_TABLE_NAME = '<table_name>' AND REFERENCED_TABLE_SCHEMA = 'diagram'; 
 ```
