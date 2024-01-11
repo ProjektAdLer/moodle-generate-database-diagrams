@@ -12,7 +12,7 @@ jobs:
   moodle-schema:
     strategy:
       matrix:
-        moodle-branch: ['MOODLE_39_STABLE', 'MOODLE_311_STABLE', 'MOODLE_400_STABLE', 'MOODLE_401_STABLE', 'MOODLE_402_STABLE']
+        moodle-branch: ['MOODLE_401_STABLE', 'MOODLE_402_STABLE', 'MOODLE_403_STABLE']
       fail-fast: false
     runs-on: ubuntu-latest
 
