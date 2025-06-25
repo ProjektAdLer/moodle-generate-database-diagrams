@@ -1,7 +1,7 @@
 # About this project
 The problem: When moodle designed their database system most popular database systems did not support foreign keys (see [this Github issue](https://github.com/mdjnelson/moodle-mod_customcert/issues/331) or [this moodle forum discussion](https://moodle.org/mod/forum/discuss.php?d=74062)).
 Therefore, they decided to implement them software side in moodle.
-As of moodle 4.2 this is still the case.
+As of moodle 5.0 this is still the case.
 As a result it is not possible to automatically generate useful database diagrams for moodle databases as they require foreign keys to show relations between tables.
 
 The solution: This repository contains a script that creates rudimentary SQL CREATE TABLE statements for all tables in the moodle database. 
@@ -11,10 +11,6 @@ It is very likely that the created database will not work with moodle.
 |            ![example database diagram](diagram_example.png)            |
 |:----------------------------------------------------------------------:|
 | *Example database diagram with all columns except primary keys hidden* |
-
-
-## compatible moodle versions
-It is known that moodle 3.9, 3.11, 4.0, 4.1 and 4.2 are working.
 
 ## How to use
 The following assumes you are using WSL. It should work like that on linux as well.
